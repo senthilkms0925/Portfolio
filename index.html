@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senthilkumar K — Linux System Administrator</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep:   #0a1628;
+    --navy:        #0f2248;
+    --navy-mid:    #1a3a6b;
+    --navy-light:  #1e4d8c;
+    --blue:        #2563eb;
+    --blue-bright: #3b82f6;
+    --gold:        #c9a84c;
+    --gold-light:  #e8c97a;
+    --cream:       #f8f9fc;
+    --white:       #ffffff;
+    --text:        #1e293b;
+    --text-mid:    #475569;
+    --text-light:  #94a3b8;
+    --border:      #e2e8f0;
+    --card-bg:     #ffffff;
+    --section-bg:  #f1f5f9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--navy-deep);
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 60px;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--navy-deep);
+    position: relative;
+    overflow: hidden;
+    padding: 120px 60px 80px;
+  }
+
+  /* Subtle diagonal lines bg */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.018) 40px,
+      rgba(255,255,255,0.018) 41px
+    );
+    pointer-events: none;
+  }
+
+  /* Gold accent bar top-left */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  .hero-inner {
+    position: relative;
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 5vw, 5.5rem);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+
+  h1 .gold { color: var(--gold); }
+
+  .hero-role {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .hero-desc {
+    font-size: 0.97rem;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.75;
+    max-width: 540px;
+    margin-bottom: 44px;
+    font-weight: 300;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy-deep);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    text-decoration: none;
+    border: 2px solid var(--gold);
+    transition: all 0.22s;
+  }
+
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.2);
+    transition: all 0.22s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* Stats panel */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+    min-width: 280px;
+  }
+
+  .stat-box {
+    background: rgba(255,255,255,0.04);
+    padding: 28px 24px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .stat-box:hover { background: rgba(201,168,76,0.08); }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    height: 4px;
+    background: linear-gradient(to right, var(--navy-deep), var(--blue), var(--navy-deep));
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main-wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .sec-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sec-label::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: var(--blue);
+    display: inline-block;
+  }
+
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+    font-weight: 700;
+    color: var(--navy-deep);
+    letter-spacing: -0.01em;
+    margin-bottom: 48px;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .skill-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--blue);
+    padding: 20px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.22s;
+    cursor: default;
+  }
+
+  .skill-card:hover {
+    border-top-color: var(--gold);
+    box-shadow: 0 4px 20px rgba(37,99,235,0.08);
+    transform: translateY(-2px);
+  }
+
+  .skill-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  .skill-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ─── EXPERIENCE ─── */
+  .exp-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+    padding: 44px 44px 40px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .exp-company {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+
+  .exp-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy-deep);
+  }
+
+  .exp-badge {
+    background: var(--navy-deep);
+    color: var(--white);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 7px 16px;
+    white-space: nowrap;
+    border-left: 3px solid var(--gold);
+  }
+
+  .exp-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 32px;
+  }
+
+  .exp-list li {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .exp-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+  }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .proj-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 28px 26px;
+    position: relative;
+    transition: all 0.22s;
+    overflow: hidden;
+  }
+
+  .proj-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--blue), var(--navy-mid));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .proj-card:hover {
+    box-shadow: 0 8px 30px rgba(37,99,235,0.1);
+    transform: translateY(-3px);
+  }
+
+  .proj-card:hover::before { transform: scaleX(1); }
+
+  .proj-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+
+  .proj-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy-deep);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .proj-desc {
+    font-size: 0.84rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--blue);
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 3px 10px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── CERT + EDU ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .info-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 36px;
+    position: relative;
+  }
+
+  .info-card.gold-accent {
+    border-top: 3px solid var(--gold);
+  }
+
+  .info-card.blue-accent {
+    border-top: 3px solid var(--blue);
+  }
+
+  .info-card-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 10px;
+  }
+
+  .info-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--navy-deep);
+    margin-bottom: 8px;
+  }
+
+  .info-card-sub {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  .cert-badge-pill {
+    display: inline-block;
+    background: var(--navy-deep);
+    color: var(--gold);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    margin-bottom: 14px;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-strip {
+    background: var(--navy-deep);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-strip::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), var(--blue), var(--gold));
+  }
+
+  .contact-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 70px 60px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .contact-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .contact-sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+  }
+
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .contact-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-val {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .contact-lbl {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ─── AVAILABILITY BADGE ─── */
+  .avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    margin-bottom: 24px;
+  }
+
+  .avail-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy-deep);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+    padding: 24px 60px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { animation: fadeUp 0.6s ease forwards; opacity: 0; }
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.2s; }
+  .d3 { animation-delay: 0.3s; }
+  .d4 { animation-delay: 0.4s; }
+  .d5 { animation-delay: 0.5s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 960px) {
+    nav { padding: 0 24px; }
+    .hero, .main-wrap { padding-left: 24px; padding-right: 24px; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-stats { display: none; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .exp-list { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; padding: 48px 24px; }
+  }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Senthil<span>kumar K</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="about">
+  <div class="hero-inner">
+    <div>
+      <div class="avail-badge fade-up d1"><span class="avail-dot"></span> Available for Opportunities</div>
+      <div class="hero-eyebrow fade-up d1">Linux System Administrator</div>
+      <h1 class="fade-up d2">Senthil<span class="gold">kumar K</span></h1>
+      <div class="hero-role fade-up d2">Infrastructure · Security · Automation</div>
+      <p class="hero-desc fade-up d3">Dedicated and performance-driven IT professional with 3+ years of hands-on experience in Linux system administration, network infrastructure management, and open-source IT solutions. Eager to contribute to organizations seeking system stability, efficiency, and secure IT operations.</p>
+      <div class="hero-btns fade-up d4">
+        <a href="#contact" class="btn-primary">Get in Touch</a>
+        <a href="#projects" class="btn-outline">View Projects</a>
+      </div>
+    </div>
+
+    <div class="hero-stats fade-up d5">
+      <div class="stat-box">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Linux Servers Managed</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Certification</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="main-wrap">
+
+  <!-- SKILLS -->
+  <div class="section" id="skills">
+    <div class="sec-label">Technical Skills</div>
+    <h2 class="sec-title">Core Competencies</h2>
+    <div class="skills-grid">
+      <div class="skill-card"><span class="skill-icon">🐧</span><span class="skill-name">Linux Administration</span></div>
+      <div class="skill-card"><span class="skill-icon">☁️</span><span class="skill-name">Cloud Technologies</span></div>
+      <div class="skill-card"><span class="skill-icon">🌐</span><span class="skill-name">Network Configuration</span></div>
+      <div class="skill-card"><span class="skill-icon">🔒</span><span class="skill-name">Security Tools</span></div>
+      <div class="skill-card"><span class="skill-icon">⚙️</span><span class="skill-name">Bash Scripting</span></div>
+      <div class="skill-card"><span class="skill-icon">📊</span><span class="skill-name">Monitoring Tools</span></div>
+      <div class="skill-card"><span class="skill-icon">🌍</span><span class="skill-name">Web Servers (Apache/Nginx)</span></div>
+      <div class="skill-card"><span class="skill-icon">🗄️</span><span class="skill-name">Database Management</span></div>
+      <div class="skill-card"><span class="skill-icon">💾</span><span class="skill-name">Backup Solutions</span></div>
+      <div class="skill-card"><span class="skill-icon">📦</span><span class="skill-name">Asset Management</span></div>
+      <div class="skill-card"><span class="skill-icon">🔧</span><span class="skill-name">Hardware Troubleshooting</span></div>
+      <div class="skill-card"><span class="skill-icon">💬</span><span class="skill-name">Internal Comms Platforms</span></div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="section" id="experience">
+    <div class="sec-label">Work History</div>
+    <h2 class="sec-title">Experience</h2>
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">Novalnet E-Solutions Pvt Ltd</div>
+          <div class="exp-role">Linux System Administrator</div>
+        </div>
+        <div class="exp-badge">Aug 2022 — Present</div>
+      </div>
+      <ul class="exp-list">
+        <li>Managed 50+ Linux servers (Ubuntu, CentOS, Red Hat) ensuring high availability and performance.</li>
+        <li>Configured LAN/WAN, VLANs, routing protocols, and deployed routers and switches.</li>
+        <li>Administered DNS, DHCP, VPN, FTP, and SSH services across the organization.</li>
+        <li>Automated monitoring, backups, and routine tasks using Bash scripting and cron jobs.</li>
+        <li>Implemented security policies, log monitoring, and proactive threat mitigation.</li>
+        <li>Integrated asset management and internal communication tools for IT operations.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section" id="projects">
+    <div class="sec-label">Featured Work</div>
+    <h2 class="sec-title">Projects</h2>
+    <div class="projects-grid">
+
+      <div class="proj-card">
+        <div class="proj-num">Project 01</div>
+        <div class="proj-title">Server Monitoring & Automation System</div>
+        <div class="proj-desc">Automated monitoring using Bash and API integration. Collects CPU, RAM, Disk, Network, and service metrics with integrated alerts for failures and abnormal usage.</div>
+        <div class="tags"><span class="tag">Bash</span><span class="tag">Cron</span><span class="tag">cURL</span><span class="tag">jq</span><span class="tag">Systemd</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 02</div>
+        <div class="proj-title">Web Application Hosting & Deployment</div>
+        <div class="proj-desc">Full Apache/Nginx hosting with SSL configuration, automated backups, and server hardening. Reduced downtime through proactive maintenance strategies.</div>
+        <div class="tags"><span class="tag">Apache</span><span class="tag">Nginx</span><span class="tag">MySQL</span><span class="tag">MariaDB</span><span class="tag">Git</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 03</div>
+        <div class="proj-title">MySQL Database Performance Monitor</div>
+        <div class="proj-desc">Real-time SQL command identification in slow/running processes. Enabled general and slow query logs with automated reporting for optimization.</div>
+        <div class="tags"><span class="tag">MySQL</span><span class="tag">Bash</span><span class="tag">Cron</span><span class="tag">Log Parsing</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 04</div>
+        <div class="proj-title">Secure Remote Shutdown Automation</div>
+        <div class="proj-desc">Used Zenity prompts to confirm shutdowns from logged-in users with full email audit trail for shutdown reasons and delays.</div>
+        <div class="tags"><span class="tag">SSH</span><span class="tag">Zenity</span><span class="tag">Bash</span><span class="tag">Email Automation</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 05</div>
+        <div class="proj-title">Network & Log Security Alert System</div>
+        <div class="proj-desc">Proactive brute-force detection with real-time alerting. Implemented log anomaly detection rules to identify and neutralize threats early.</div>
+        <div class="tags"><span class="tag">Rsyslog</span><span class="tag">UFW</span><span class="tag">Firewalld</span><span class="tag">Fail2ban</span></div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-num">Project 06</div>
+        <div class="proj-title">Linux Patch Management Automation</div>
+        <div class="proj-desc">Automated update rollout with rollback capability and compliance reporting. Improved overall system security across all managed servers.</div>
+        <div class="tags"><span class="tag">Bash</span><span class="tag">APT/YUM</span><span class="tag">Cron</span><span class="tag">Ansible</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EDUCATION & CERT -->
+  <div class="section" id="education">
+    <div class="sec-label">Academic & Credentials</div>
+    <h2 class="sec-title">Education & Certification</h2>
+    <div class="two-col">
+
+      <div class="info-card blue-accent">
+        <div class="info-card-label">Education</div>
+        <div class="info-card-title">Bachelor in Computer Application</div>
+        <div class="info-card-sub">
+          Sree Saraswathi Thyagaraj College, Pollachi<br>
+          <span style="color:var(--text-light); font-size:0.82rem;">2017 – 2020</span>
+        </div>
+      </div>
+
+      <div class="info-card gold-accent">
+        <div class="cert-badge-pill">Certification</div>
+        <div class="info-card-title">CWASP Network Intelligence</div>
+        <div class="info-card-sub">Certified in web application vulnerabilities and penetration testing methodologies. Covers real-world security assessments, vulnerability identification, and ethical hacking techniques.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- CONTACT -->
+<div class="contact-strip" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="sec-label" style="color:var(--gold); margin-bottom:12px;">
+        <span style="width:20px;height:2px;background:var(--gold);display:inline-block;margin-right:10px;"></span>
+        Get In Touch
+      </div>
+      <div class="contact-heading">Let's Work Together</div>
+      <div class="contact-sub">Open to opportunities in Linux Administration, Networking & IT Security.</div>
+    </div>
+    <div class="contact-items">
+      <div class="contact-row">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-lbl">Phone</div>
+          <div class="contact-val">+91 9600366356</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-lbl">Email</div>
+          <div class="contact-val">senthilkms0925@gmail.com</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-lbl">Location</div>
+          <div class="contact-val">Chennai, Tamil Nadu, India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 Senthilkumar K &nbsp;·&nbsp; Linux System Administrator &nbsp;·&nbsp; Chennai, India</footer>
+
+</body>
+</html>
